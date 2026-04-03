@@ -38,6 +38,28 @@ export interface UseAuthState {
   fieldErrors: Record<string, string>;
 }
 
+function apiErrorsToFieldMap(data: unknown): Record<string, string> {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return {};
+
+  const fieldMap: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(data as Record<string, unknown>)) {
+    if (Array.isArray(value) && value.length > 0) {
+      const firstMessage = value.find((item) => typeof item === 'string');
+      if (typeof firstMessage === 'string' && firstMessage.trim()) {
+        fieldMap[key] = firstMessage;
+      }
+      continue;
+    }
+
+    if (typeof value === 'string' && value.trim()) {
+      fieldMap[key] = value;
+    }
+  }
+
+  return fieldMap;
+}
+
 export function useLogin() {
   const navigate = useNavigate();
   const [state, setState] = useState<UseAuthState>({
@@ -129,14 +151,22 @@ export function useRegister() {
           return;
         }
 
+        const nextFieldErrors = apiErrorsToFieldMap(res.data);
+
         setState({
           loading: false,
-          error: res.message ?? 'Registration failed',
-          fieldErrors: {},
+          error: Object.keys(nextFieldErrors).length > 0 ? null : res.message ?? 'Registration failed',
+          fieldErrors: nextFieldErrors,
         });
       } catch (e) {
         const message = e instanceof Error ? e.message : 'Network error';
-        setState({ loading: false, error: message, fieldErrors: {} });
+        const nextFieldErrors =
+          e && typeof e === 'object' && 'data' in e ? apiErrorsToFieldMap((e as { data?: unknown }).data) : {};
+        setState({
+          loading: false,
+          error: Object.keys(nextFieldErrors).length > 0 ? null : message,
+          fieldErrors: nextFieldErrors,
+        });
       }
     },
     [navigate]
