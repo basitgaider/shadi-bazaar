@@ -30,21 +30,21 @@ export interface ItemTypeRecord {
 }
 
 export async function getCategories(): Promise<CategoryRecord[]> {
-  const res = await apiData<{ records: CategoryRecord[] }>('categories/');
+  const res = await apiData<{ records: CategoryRecord[] }>('categories');
   return res?.records ?? [];
 }
 
 export async function getCities(): Promise<CityRecord[]> {
-  const res = await apiData<{ records: CityRecord[] }>('cities/');
+  const res = await apiData<{ records: CityRecord[] }>('cities');
   return res?.records ?? [];
 }
 
 export async function getConditions(): Promise<ConditionRecord[]> {
-  const res = await apiData<{ records: ConditionRecord[] }>('conditions/');
+  const res = await apiData<{ records: ConditionRecord[] }>('conditions');
   return res?.records ?? [];
 }
 
 export async function getItemTypes(): Promise<ItemTypeRecord[]> {
-  const res = await apiData<{ records: ItemTypeRecord[] }>('itemTypes/');
+  const res = await apiData<{ records: ItemTypeRecord[] }>('itemTypes');
   return res?.records ?? [];
 }

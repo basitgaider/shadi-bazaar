@@ -8,7 +8,6 @@ import type { ApiResponse } from './types';
 import { isApiSuccess } from './types';
 
 const defaultHeaders: HeadersInit = {
-  'Content-Type': 'application/json',
   Accept: 'application/json',
 };
 
@@ -49,6 +48,9 @@ function buildHeaders(options: RequestInit, token: string | null): HeadersInit {
   const headers: Record<string, string> = { ...defaultHeaders } as Record<string, string>;
   const raw = getRawToken(token);
   if (raw) headers['Authorization'] = `Bearer ${raw}`;
+  const method = String(options.method ?? 'GET').toUpperCase();
+  const hasBody = options.body != null && method !== 'GET' && method !== 'HEAD';
+  if (hasBody) headers['Content-Type'] = 'application/json';
   return { ...headers, ...(options.headers as Record<string, string>) };
 }
 

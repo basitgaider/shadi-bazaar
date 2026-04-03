@@ -10,7 +10,7 @@ export interface BlogRecord {
 }
 
 export async function getBlogs(): Promise<BlogRecord[]> {
-  const res = await apiData<{ records: BlogRecord[] }>('blogs/');
+  const res = await apiData<{ records: BlogRecord[] }>('blogs');
   return res?.records ?? [];
 }
 
