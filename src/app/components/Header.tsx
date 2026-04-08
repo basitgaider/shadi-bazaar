@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { Bell, CheckCheck, Facebook, Heart, Instagram, LogOut, MessageCircle, Trash2, User, X } from 'lucide-react';
+import { Bell, CheckCheck, Facebook, Heart, House, Instagram, LayoutGrid, LogOut, MessageCircle, Newspaper, Trash2, User, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { getStoredToken } from '../../core/api/client';
 import { ROUTES } from '../../core/constants';
@@ -389,11 +389,13 @@ export function Header() {
 
       <div className="border-t border-gray-100 md:hidden">
         <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between text-sm">
+          <div className="grid grid-cols-6 items-center gap-2 text-xs">
             <Link to={ROUTES.HOME} className="flex flex-col items-center gap-1 text-gray-700">
+              <House className="h-4 w-4" />
               <span>Home</span>
             </Link>
             <Link to={ROUTES.FEED} className="flex flex-col items-center gap-1 text-gray-700">
+              <Newspaper className="h-4 w-4" />
               <span>Feed</span>
             </Link>
             <Link to={ROUTES.MY_PROFILE} className="flex flex-col items-center gap-1 text-gray-700">
@@ -401,11 +403,16 @@ export function Header() {
               <span>Profile</span>
             </Link>
             <Link to={ROUTES.MY_ADS} className="flex flex-col items-center gap-1 text-gray-700">
+              <LayoutGrid className="h-4 w-4" />
               <span>Ads</span>
             </Link>
             <Link to={ROUTES.FAVORITES} className="flex flex-col items-center gap-1 text-gray-700">
               <Heart className="h-4 w-4" />
               <span>Favorites</span>
+            </Link>
+            <Link to={ROUTES.CHAT} className="flex flex-col items-center gap-1 text-gray-700">
+              <MessageCircle className="h-4 w-4" />
+              <span>Messages</span>
             </Link>
           </div>
         </div>
