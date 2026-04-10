@@ -42,10 +42,10 @@ export function truncateText(value?: string | null, maxLength = 160): string {
   return `${normalized.slice(0, maxLength).trimEnd()}...`;
 }
 
-export function formatDisplayDate(value?: string | null): string {
-  if (!value) return 'Recently';
+export function formatDisplayDate(value?: string | null, fallback = 'Recently'): string {
+  if (!value) return fallback;
   const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return 'Recently';
+  if (Number.isNaN(date.getTime())) return fallback;
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -147,6 +147,8 @@ export interface FeedPostViewModel {
 }
 
 export function mapFeedPost(post: FeedPostRecord): FeedPostViewModel {
+  const createdAt = post.created_at ?? post.createdAt ?? '';
+
   return {
     id: String(post.id),
     userId: String(post.user_id),
@@ -154,7 +156,7 @@ export function mapFeedPost(post: FeedPostRecord): FeedPostViewModel {
     userAvatar: resolveApiAssetUrl(post.user?.image),
     content: post.title,
     image: post.images?.[0]?.images ? resolveApiAssetUrl(post.images[0].images) : undefined,
-    timestamp: post.created_at || '',
+    timestamp: createdAt,
     likes: Number(post.likes_count ?? 0),
     comments: (post.comments ?? []).map((comment) => mapFeedComment(comment)),
     isLiked: Boolean(post.is_liked),
@@ -162,11 +164,13 @@ export function mapFeedPost(post: FeedPostRecord): FeedPostViewModel {
 }
 
 export function mapFeedComment(comment: FeedComment) {
+  const createdAt = comment.created_at ?? comment.createdAt ?? '';
+
   return {
     id: String(comment.id),
     userId: String(comment.user_id),
     userName: comment.user?.name || 'User',
     text: comment.comment,
-    timestamp: comment.created_at || '',
+    timestamp: createdAt,
   };
 }

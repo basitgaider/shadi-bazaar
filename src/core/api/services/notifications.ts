@@ -25,7 +25,7 @@ export interface NotificationsResponse {
 }
 
 export function getNotifications(): Promise<NotificationsResponse> {
-  return apiData<NotificationsResponse>(`${PREFIX}/`);
+  return apiData<NotificationsResponse>(PREFIX);
 }
 
 export function markNotificationsRead(notificationId?: number): Promise<ApiResponse<unknown>> {

@@ -320,30 +320,22 @@ export function CreateAdPage() {
               {step === 1 ? (
                 <>
                   <h3 className="mb-4 text-xl font-bold text-gray-900">Select Category</h3>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {categories.map((category) => (
-                      <label
-                        key={category.id}
-                        htmlFor={`category-${category.id}`}
-                        className={`cursor-pointer rounded-xl border-2 p-4 transition-all ${
-                          formData.category_id === String(category.id) ? 'border-pink-600 bg-pink-50' : 'border-gray-200 hover:border-pink-300'
-                        }`}
-                      >
-                        <input
-                          id={`category-${category.id}`}
-                          type="radio"
-                          name="category"
-                          value={category.id}
-                          checked={formData.category_id === String(category.id)}
-                          onChange={(event) => updateField('category_id', event.target.value)}
-                          className="sr-only"
-                        />
-                        <div className="text-center">
-                          <div className="mb-2 text-lg font-semibold text-gray-900">{category.title}</div>
-                          <p className="text-sm text-gray-500">Use this category for your listing placement.</p>
-                        </div>
-                      </label>
-                    ))}
+                  <div className="space-y-2">
+                    <label htmlFor="ad-category" className="block text-sm font-medium text-gray-700">Category</label>
+                    <select
+                      id="ad-category"
+                      value={formData.category_id}
+                      onChange={(event) => updateField('category_id', event.target.value)}
+                      className={`w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 ${fieldErrors.category_id ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-pink-500'}`}
+                    >
+                      <option value="">Select category</option>
+                      {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.title}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-sm text-gray-500">Choose where this listing should appear.</p>
                   </div>
                   {fieldErrors.category_id ? <p className="text-sm text-red-600">{fieldErrors.category_id}</p> : null}
                   <button
@@ -362,6 +354,23 @@ export function CreateAdPage() {
                     <button type="button" onClick={() => setStep(1)} className="text-pink-600 hover:underline">
                       Back to category
                     </button>
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="ad-category-details" className="block text-sm font-medium text-gray-700">Category</label>
+                    <select
+                      id="ad-category-details"
+                      value={formData.category_id}
+                      onChange={(event) => updateField('category_id', event.target.value)}
+                      className={`w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 ${fieldErrors.category_id ? 'border-red-300 focus:ring-red-200' : 'border-gray-200 focus:ring-pink-500'}`}
+                    >
+                      <option value="">Select category</option>
+                      {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.title}
+                        </option>
+                      ))}
+                    </select>
+                    {fieldErrors.category_id ? <p className="text-sm text-red-600">{fieldErrors.category_id}</p> : null}
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="ad-title" className="block text-sm font-medium text-gray-700">Title</label>

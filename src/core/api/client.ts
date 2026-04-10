@@ -32,9 +32,28 @@ export function setStoredToken(token: string | null): void {
 }
 
 export function getApiUrl(path: string): string {
-  const base = API_BASE_URL.replace(/\/$/, '');
+  const base = getApiBaseUrl();
   const p = path.startsWith('/') ? path : `/${path}`;
   return `${base}${p}`;
+}
+
+function getApiBaseUrl(): string {
+  const base = API_BASE_URL.replace(/\/$/, '');
+
+  if (!base) return '';
+
+  // Route API calls through the local Vite proxy during development so the
+  // browser does not perform a cross-origin preflight against the remote API.
+  if (import.meta.env.DEV) {
+    try {
+      const parsed = new URL(base);
+      return `/__api_proxy${parsed.pathname}`;
+    } catch {
+      return base;
+    }
+  }
+
+  return base;
 }
 
 /** Strip "Bearer " prefix so we never send "Bearer Bearer ...". */

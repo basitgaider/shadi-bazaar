@@ -12,6 +12,7 @@ export interface FeedPostRecord {
   user_id: number;
   title: string;
   created_at?: string;
+  createdAt?: string;
   images?: { id: number; feed_id: number; images: string }[];
   user?: { id: number; name: string; image?: string };
   likes_count?: number;
@@ -68,6 +69,7 @@ export interface FeedComment {
   user_id: number;
   comment: string;
   created_at?: string;
+  createdAt?: string;
   user?: { id: number; name: string; image?: string };
 }
 

@@ -16,6 +16,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/__api_proxy': {
+        target: 'https://shadibazar.pk',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (requestPath) => requestPath.replace(/^\/__api_proxy/, ''),
+      },
+    },
+  },
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],

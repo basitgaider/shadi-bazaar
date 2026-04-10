@@ -248,7 +248,7 @@ export function FeedPage() {
                     <div>
                       <h3 className="font-bold text-gray-900">{post.userName}</h3>
                       <p className="text-sm text-gray-500">
-                        {formatDisplayDate(post.timestamp)}
+                        {formatDisplayDate(post.timestamp, 'Date unavailable')}
                       </p>
                     </div>
                   </div>
@@ -295,7 +295,7 @@ export function FeedPage() {
                               <p className="text-sm text-gray-700">{comment.text}</p>
                             </div>
                             <p className="text-xs text-gray-500 mt-1">
-                              {formatDisplayDate(comment.timestamp)}
+                              {formatDisplayDate(comment.timestamp, 'Date unavailable')}
                             </p>
                           </div>
                         </div>
