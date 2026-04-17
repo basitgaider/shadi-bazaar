@@ -21,7 +21,7 @@ export interface PostRecord {
   featured_image?: string;
   images?: { id: number; post_id: number; images: string }[];
   post_images?: { id: number; post_id: number; images: string }[];
-  user?: { id: number; name: string; email?: string; image?: string; phone?: string };
+  user?: { id: number; name: string; email?: string; image?: string; phone?: string; created_at?: string };
   category?: { id: number; title: string; image?: string };
   item_type?: { id: number; title: string };
   condition?: { id: number; title: string };

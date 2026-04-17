@@ -16,12 +16,31 @@ function getBaseOrigin(): string {
   }
 }
 
+function normalizeApiAssetPath(path: string): string {
+  const normalized = path.trim();
+
+  if (!normalized) return normalized;
+
+  if (/^https?:\/\//i.test(normalized)) {
+    try {
+      const url = new URL(normalized);
+      url.pathname = url.pathname.replace(/^\/public(?=\/)/, '');
+      return url.toString();
+    } catch {
+      return normalized;
+    }
+  }
+
+  return normalized.replace(/^\/public(?=\/)/, '');
+}
+
 export function resolveApiAssetUrl(path?: string | null): string {
   if (!path) return FALLBACK_IMAGE;
-  if (/^https?:\/\//i.test(path)) return path;
+  const normalizedPath = normalizeApiAssetPath(path);
+  if (/^https?:\/\//i.test(normalizedPath)) return normalizedPath;
   const origin = getBaseOrigin();
-  if (!origin) return path;
-  return `${origin}${path.startsWith('/') ? path : `/${path}`}`;
+  if (!origin) return normalizedPath;
+  return `${origin}${normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`}`;
 }
 
 export function stripHtml(value?: string | null): string {
@@ -94,6 +113,7 @@ export function mapPostToAd(post: PostRecord, options?: { isFavorite?: boolean }
     ?? post.images?.[0]?.images
     ?? post.featured_image;
   const sellerPhone = formatPhoneForDial(post.user?.phone);
+  const sellerMemberSince = post.user?.created_at || post.created_at || '';
 
   return {
     id: String(post.id),
@@ -111,7 +131,7 @@ export function mapPostToAd(post: PostRecord, options?: { isFavorite?: boolean }
       id: String(post.user?.id ?? '0'),
       name: post.user?.name || 'ShadiBazar Seller',
       rating: 5,
-      memberSince: post.created_at || new Date().toISOString(),
+      memberSince: sellerMemberSince,
       phone: sellerPhone,
       whatsapp: sellerPhone,
       avatar: resolveApiAssetUrl(post.user?.image),

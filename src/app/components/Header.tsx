@@ -13,6 +13,7 @@ import {
   type NotificationRecord,
 } from '../../core/api/services/notifications';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { BrandLogo } from './BrandLogo';
 import { Skeleton } from './ui/skeleton';
 import { formatDisplayDate, resolveApiAssetUrl } from '../utils/marketplace';
 
@@ -210,9 +211,7 @@ export function Header() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-6">
           <Link to="/" className="flex min-w-0 flex-shrink-0 items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-rose-600">
-              <Heart className="h-6 w-6 fill-white text-white" />
-            </div>
+            <BrandLogo className="h-11 w-11 flex-shrink-0 rounded-full object-contain" />
             <div className="min-w-0">
               <h1 className="truncate bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-xl font-bold text-transparent sm:text-2xl">
                 ShadiBazar

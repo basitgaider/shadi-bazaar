@@ -47,6 +47,9 @@ function getApiBaseUrl(): string {
   if (import.meta.env.DEV) {
     try {
       const parsed = new URL(base);
+      if (['localhost', '127.0.0.1', '::1'].includes(parsed.hostname)) {
+        return base;
+      }
       return `/__api_proxy${parsed.pathname}`;
     } catch {
       return base;

@@ -9,7 +9,7 @@ import { getApiUrl, getStoredToken } from '@/core/api/client';
 import { ROUTES } from '@/core/constants';
 import { addFavourite, getFavourites, removeFavourite } from '@/core/api/services/favourites';
 import { getMyPostDetail, getPostDetail, getPostsByCategory } from '@/core/api/services/posts';
-import { mapPostToAd, resolveApiAssetUrl } from '../utils/marketplace';
+import { formatDisplayDate, mapPostToAd, resolveApiAssetUrl } from '../utils/marketplace';
 
 export function PostDetailPage() {
   const { id } = useParams();
@@ -313,7 +313,7 @@ export function PostDetailPage() {
                       <span className="text-sm font-medium">{ad.seller.rating}</span>
                     </div>
                     <p className="text-xs text-gray-500 mt-1">
-                      Member since {new Date(ad.seller.memberSince).getFullYear()}
+                      Member since {formatDisplayDate(ad.seller.memberSince, 'Date unavailable')}
                     </p>
                   </div>
                 </Link>

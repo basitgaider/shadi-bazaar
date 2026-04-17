@@ -179,7 +179,6 @@ export function MyProfilePage() {
     const whatsapp = normalizePhoneInput(profile.whatsapp);
     const formData = new FormData();
     formData.set('name', profile.name.trim());
-    formData.set('email', profile.email.trim());
     formData.set('country_code', phone.countryCode || profile.countryCode);
     formData.set('phone', phone.phone);
     formData.set('whatsapp_number', whatsapp.display);
@@ -339,9 +338,11 @@ export function MyProfilePage() {
                           id="profile-email"
                           type="email"
                           value={profile.email}
-                          onChange={(e) => setProfile((current) => ({ ...current, email: e.target.value }))}
-                          className="w-full rounded-lg border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                          readOnly
+                          disabled
+                          className="w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-100 px-4 py-3 text-gray-500"
                         />
+                        <p className="mt-2 text-xs text-gray-500">Email address cannot be changed from profile settings.</p>
                       </div>
 
                       <div>
